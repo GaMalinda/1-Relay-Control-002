@@ -6,7 +6,20 @@
     <title>🏮නිග්‍රෝධමික ජාතකය🏮</title>
     <style>
         :root { --gold: #d4af37; --bg: #0a0a0a; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background: var(--bg); color: white; margin: 0; padding: 10px; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            background: var(--bg); 
+            color: white; 
+            margin: 0; 
+            padding: 10px; 
+            overflow-x: hidden; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+        }
         
         #login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.6s ease; }
         .login-card { background: #111; padding: 30px; border-radius: 20px; border: 1px solid #333; box-shadow: 0 10px 40px rgba(0,0,0,0.8); width: 85%; max-width: 350px; text-align: center; }
@@ -21,11 +34,9 @@
         .container { position: relative; display: inline-block; padding: 0; border: 2px solid #333; border-radius: 15px; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; max-width: 700px; line-height: 0; }
         .thorana-img { width: 100%; height: auto; display: block; border-radius: 12px; -webkit-user-drag: none; pointer-events: none; }
         
-        /* Font size change based on screen width */
         .btn { position: absolute; transform: translate(-50%, -50%); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; user-select: none; touch-action: none; border: 2px solid rgba(255,255,255,0.3); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-size: 3vw; }
         @media (min-width: 700px) { .btn { font-size: 18px; } }
         .circle { border-radius: 50%; } 
-        .square { border-radius: 10%; }
 
         .on { background: #2ecc71 !important; box-shadow: 0 0 20px #2ecc71, 0 0 40px rgba(46, 204, 113, 0.6); border-color: #fff !important; transform: translate(-50%, -50%) scale(1.1); z-index: 5; } 
         .off { background: rgba(0,0,0,0.7); border-color: rgba(255,255,255,0.4); }
@@ -37,30 +48,14 @@
         #log-box { margin-top: 20px; background: #111; padding: 15px; border-radius: 8px; display: none; text-align: left; border: 1px solid #444; }
         pre { background: #000; padding: 15px; color: #0f0; font-size: 11px; overflow-x: auto; }
 
-        .footer-container {
-    display: flex;
-    flex-direction: column; /* එක යට එක දත්ත පෙන්වීමට */
-    align-items: center;    /* හරස් අතට මැදට ගැනීමට (Horizontal center) */
-    justify-content: center; /* සිරස් අතට මැදට ගැනීමට (Vertical center) */
-    text-align: center;      /* අකුරු මැදට ගැනීමට */
-    width: 100%;
-    margin-top: 20px;       /* ඉහළින් පොඩි ඉඩක් තැබීමට */
-    padding-bottom: 10px;
-}
+        .footer-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; margin-top: 20px; padding-bottom: 10px; }
+        .tsda-text { width: 100%; margin: 2px 0; }
 
-.tsda-text, .gm-text {
-    width: 100%;            /* සම්පූර්ණ පළල අරගෙන මැදට වීමට */
-    margin: 2px 0;          /* පේළි අතර පොඩි ඉඩක් තැබීමට */
-}
-
-        /* ALL Sizes and Positions converted to % for perfect responsiveness */
+        /* Relay බටන් එකේ මුලික පිහිටීම (Position) */
         .p1 { top: 31.3%; left: 50.4%; width: 11%; height: 11%; }
-        
-
     </style>
 </head>
 <body>
-    <!-- HTML & Scripts ඒ විදිහටම තියෙනවා... -->
     <div id="login-screen">
         <div class="login-card">
             <h2>🏮නිග්‍රෝධමික ජාතකය🏮</h2>
@@ -82,8 +77,6 @@
         <div class='container' id='mainContainer'>
             <img src='https://raw.githubusercontent.com/GaMalinda/Thorana-Control-8-Relay/main/WhatsApp%20Image%202026-05-03%20at%2010.15.32.jpeg' class='thorana-img' alt="Thorana Background">
             <div class='btn circle off p1' data-id='0' data-cls='p1' onclick='handleBtnClick(this)'>1</div>
-            <div class='btn square off p2' data-id='1' data-cls='p2' onclick='handleBtnClick(this)'>2</div>
-            
         </div>
 
         <div class='footer-container'>
@@ -97,9 +90,13 @@
     </div>
 
 <script>
+    // පින්තූරයේ තිබුණු නිවැරදි විස්තර
     const AUTH_NUMBER = "0712001813";
     let editMode = false; let activeBtn = null; let selectedEl = null;
-    const firebaseConfig = { apiKey: "AIzaSyA9iNAeq3aAtwHHqho84sodoeF6uipd6n4", databaseURL: "https://thorana-8-relay-default-rtdb.firebaseio.com" };
+    const firebaseConfig = { 
+        apiKey: "AIzaSyB3-nR-0B7ZFA-CnA8LBAdN8Wn0-xwnSc", 
+        databaseURL: "https://relay-control-002-default-rtdb.firebaseio.com" 
+    };
 
     function checkLogin() {
         const input = document.getElementById('phoneInput').value;
@@ -120,65 +117,51 @@
     }
 
     function listenToFirebase() {
-        const url = `${firebaseConfig.databaseURL}/relays.json?auth=${firebaseConfig.apiKey}`;
-        const source = new EventSource(url);
-        source.onmessage = e => {
-            const res = JSON.parse(e.data);
-            if (res.path === "/") { if (res.data) Object.keys(res.data).forEach(k => updateUI(k, res.data[k])); }
-            else if (res.path) updateUI(res.path.replace("/", ""), res.data);
-        };
-    }
-
-    function updateUI(key, status) {
-        let id = parseInt(key.replace("r", "")) - 1;
-        document.querySelectorAll(`[data-id='${id}']`).forEach(b => {
-            if(status) { b.classList.add('on'); b.classList.remove('off'); }
-            else { b.classList.remove('on'); b.classList.add('off'); }
-        });
+        const url = `${firebaseConfig.databaseURL}/relays/r1.json?auth=${firebaseConfig.apiKey}`;
+        setInterval(() => {
+            fetch(url).then(res => res.json()).then(status => {
+                const b = document.querySelector(`[data-id='0']`);
+                if(status) { b.classList.add('on'); b.classList.remove('off'); }
+                else { b.classList.remove('on'); b.classList.add('off'); }
+            }).catch(err => console.log("Firebase Error"));
+        }, 1500);
     }
 
     function handleBtnClick(el) {
-        if(!editMode) {
-            let id = el.getAttribute('data-id');
-            let isCurrentlyOn = el.classList.contains('on');
-            let newStatus = !isCurrentlyOn;
-            document.querySelectorAll(`[data-id='${id}']`).forEach(b => {
-                if(newStatus) { b.classList.add('on'); b.classList.remove('off'); }
-                else { b.classList.remove('on'); b.classList.add('off'); }
-            });
-            fetch(`${firebaseConfig.databaseURL}/relays/r${parseInt(id)+1}.json?auth=${firebaseConfig.apiKey}`, {
-                method: 'PUT', body: JSON.stringify(newStatus)
-            });
+        if(editMode) {
+            if(selectedEl) selectedEl.classList.remove('selected');
+            selectedEl = el; selectedEl.classList.add('selected');
+            document.getElementById('selName').innerText = 'Button ' + el.innerText;
             return;
         }
-        if(selectedEl) selectedEl.classList.remove('selected');
-        selectedEl = el; selectedEl.classList.add('selected');
-        document.getElementById('selName').innerText = 'Button ' + el.innerText;
+        let isCurrentlyOn = el.classList.contains('on');
+        let newStatus = !isCurrentlyOn;
+        
+        fetch(`${firebaseConfig.databaseURL}/relays/r1.json?auth=${firebaseConfig.apiKey}`, {
+            method: 'PUT', body: JSON.stringify(newStatus)
+        });
     }
 
     function unlockEditor() { 
-    if(prompt('Admin Key:') == '4321') { 
-        editMode = true; 
-        
-        // මේ පේළිය අලුතින් එකතු කරන්න - එවිට Admin Key එක දුන් පසු අංකය පෙනේවි
-        document.getElementById('myNumber').style.display = 'block'; 
+        if(prompt('Admin Key:') == '4321') { 
+            editMode = true; 
+            document.getElementById('myNumber').style.display = 'block'; 
+            document.getElementById('log-box').style.display='block'; 
+            document.getElementById('editor-controls').style.display='block'; 
+            document.getElementById('lockBtn').style.display='none'; 
+            updateLogs(); 
+        } 
+    }
 
-        document.getElementById('log-box').style.display='block'; 
-        document.getElementById('editor-controls').style.display='block'; 
-        document.getElementById('lockBtn').style.display='none'; 
-        updateLogs(); 
-    } 
-}
-    // Updated changeSize for % support
     function changeSize(d) { 
         if(!selectedEl) return; 
         const r = container.getBoundingClientRect();
         let currentW_px = selectedEl.offsetWidth;
         let newW_pct = ((currentW_px + d) / r.width * 100).toFixed(1);
-        let newH_pct = ((selectedEl.offsetHeight + (selectedEl.classList.contains('square') ? d*1.37 : d)) / r.height * 100).toFixed(1);
+        let newH_pct = (selectedEl.offsetHeight / r.height * 100).toFixed(1);
         
         selectedEl.style.width = newW_pct + '%';
-        selectedEl.style.height = newH_pct + '%';
+        selectedEl.style.height = newW_pct + '%'; // වටකුරු නිසා එකම අගයක් දෙමු
         updateLogs(); 
     }
     

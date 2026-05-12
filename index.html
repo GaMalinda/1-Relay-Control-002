@@ -9,7 +9,13 @@
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; 
-            background: var(--bg); 
+            background-color: #000;
+            /* ඔයාගේ GitHub එකේ තියෙන පින්තූරය පසුබිමට දාලා තියෙනවා */
+            background-image: url('https://raw.githubusercontent.com/GaMalinda/1-Relay-Control-002/main/download.jfif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: white; 
             margin: 0; 
             padding: 10px; 
@@ -31,88 +37,90 @@
         #main-content { display: none; opacity: 0; transition: opacity 0.8s ease; width: 100%; }
 
         h2 { color: var(--gold); text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); margin-bottom: 15px; }
-        .container { position: relative; display: inline-block; padding: 0; border: 2px solid #333; border-radius: 15px; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 100%; max-width: 700px; line-height: 0; }
-        .thorana-img { width: 100%; height: auto; display: block; border-radius: 12px; -webkit-user-drag: none; pointer-events: none; }
+        .container { position: relative; width: 100vw; height: 80vh; max-width: 800px; display: flex; align-items: center; justify-content: center; }
         
-        .btn { position: absolute; transform: translate(-50%, -50%); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; user-select: none; touch-action: none; border: 2px solid rgba(255,255,255,0.3); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); font-size: 3vw; }
-        @media (min-width: 700px) { .btn { font-size: 18px; } }
-        .circle { border-radius: 50%; } 
+        /* රිලේ බටන් එකේ පෙනුම */
+        .btn { 
+            position: absolute; 
+            transform: translate(-50%, -50%); 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: bold; 
+            color: white; 
+            user-select: none; 
+            touch-action: none; 
+            border: 2px solid rgba(255,255,255,0.3); 
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border-radius: 50%;
+            font-size: 20px;
+            /* බටන් එකේ පිහිටීම - Admin Mode එකෙන් වෙනස් කරගන්න පුළුවන් */
+            top: 50%; left: 50%; width: 80px; height: 80px;
+        }
 
-        .on { background: #2ecc71 !important; box-shadow: 0 0 20px #2ecc71, 0 0 40px rgba(46, 204, 113, 0.6); border-color: #fff !important; transform: translate(-50%, -50%) scale(1.1); z-index: 5; } 
+        .on { background: #2ecc71 !important; box-shadow: 0 0 20px #2ecc71; border-color: #fff !important; transform: translate(-50%, -50%) scale(1.1); } 
         .off { background: rgba(0,0,0,0.7); border-color: rgba(255,255,255,0.4); }
-        .btn:active { transform: translate(-50%, -50%) scale(0.85); opacity: 0.9; }
 
         .selected { border: 3px solid #ffee00 !important; box-shadow: 0 0 25px #ffee00 !important; z-index: 100; }
-        #editor-controls { margin-bottom: 15px; display: none; background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid var(--gold); }
-        .ctrl-btn { background: var(--gold); color: black; border: none; padding: 12px 18px; margin: 5px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        #log-box { margin-top: 20px; background: #111; padding: 15px; border-radius: 8px; display: none; text-align: left; border: 1px solid #444; }
-        pre { background: #000; padding: 15px; color: #0f0; font-size: 11px; overflow-x: auto; }
-
-        .footer-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; margin-top: 20px; padding-bottom: 10px; }
-        .tsda-text { width: 100%; margin: 2px 0; }
-
-        /* Relay බටන් එකේ මුලික පිහිටීම (Position) */
-        .p1 { top: 31.3%; left: 50.4%; width: 11%; height: 11%; }
+        #editor-controls { position: fixed; top: 10px; display: none; background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid var(--gold); z-index: 1100; }
+        .ctrl-btn { background: var(--gold); color: black; border: none; padding: 10px 15px; margin: 5px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
+        .footer-container { margin-top: 20px; text-align: center; width: 100%; }
+        .tsda-text { color: var(--gold); font-weight: bold; }
     </style>
 </head>
 <body>
+
     <div id="login-screen">
         <div class="login-card">
             <h2>🏮නිග්‍රෝධමික ජාතකය🏮</h2>
             <p style="color: #666; font-size: 14px; margin-bottom: 20px;">පාලක පුවරුවට පිවිසීමට ඔබගේ අංකය ඇතුළත් කරන්න</p>
             <input type="tel" id="phoneInput" placeholder="0XXXXXXXXX" maxlength="10">
             <button class="login-btn" onclick="checkLogin()">LOGIN</button>
-            <p id="error-msg" style="color: #ff4757; font-size: 13px; margin-top: 10px; display: none;">අංකය වැරදියි. නැවත උත්සාහ කරන්න.</p>
+            <p id="error-msg" style="color: #ff4757; font-size: 13px; margin-top: 10px; display: none;">අංකය වැරදියි.</p>
         </div>
     </div>
 
     <div id="main-content">
         <h2>🏮නිග්‍රෝධමික ජාතකය🏮</h2>
+        
         <div id='editor-controls'>
-            Selected: <span id='selName' style='color:var(--gold)'>None</span><br>
-            <button class='ctrl-btn' onclick='changeSize(2)'>SIZE +</button>
-            <button class='ctrl-btn' onclick='changeSize(-2)'>SIZE -</button>
+            <button class='ctrl-btn' onclick='changeSize(5)'>SIZE +</button>
+            <button class='ctrl-btn' onclick='changeSize(-5)'>SIZE -</button>
+            <button class='ctrl-btn' onclick='copyNewCode()'>COPY CSS</button>
         </div>
 
         <div class='container' id='mainContainer'>
-            <img src='https://raw.githubusercontent.com/GaMalinda/Thorana-Control-8-Relay/main/WhatsApp%20Image%202026-05-03%20at%2010.15.32.jpeg' class='thorana-img' alt="Thorana Background">
-            <div class='btn circle off p1' data-id='0' data-cls='p1' onclick='handleBtnClick(this)'>1</div>
+            <div class='btn off' data-id='0' id='relayBtn' onclick='handleBtnClick(this)'>1</div>
         </div>
 
         <div class='footer-container'>
             <p><button onclick='unlockEditor()' id='lockBtn' style='background:transparent; color:#333; border:none; font-size:10px;'>.</button></p>
             <div class='tsda-text'>TSDA ENGINEERING</div>
-            <div class='tsda-text' style="font-size: 16px;">071 200 1813</div>
-            <div class='gm-text' style="font-size: 6px;">DEVELOPED BY TSDA ENGINEERING</div>
-            <div id="myNumber" style="font-size: 10px; color: #ffffff; margin-top: 5px; display: none;">077 180 7892</div>
+            <div style="font-size: 14px; color: #666;">071 200 1813</div>
         </div>
-        <div id='log-box'><button class='ctrl-btn' style='width:100%' onclick='copyToClipboard()'>Copy Code</button><pre id='coords'></pre></div>
     </div>
 
 <script>
-    // පින්තූරයේ තිබුණු නිවැරදි විස්තර
+    // Firebase විස්තර
     const AUTH_NUMBER = "0712001813";
-    let editMode = false; let activeBtn = null; let selectedEl = null;
     const firebaseConfig = { 
         apiKey: "AIzaSyB3-nR-0B7ZFA-CnA8LBAdN8Wn0-xwnSc", 
         databaseURL: "https://relay-control-002-default-rtdb.firebaseio.com" 
     };
 
     function checkLogin() {
-        const input = document.getElementById('phoneInput').value;
-        const error = document.getElementById('error-msg');
-        if(input === AUTH_NUMBER) {
+        if(document.getElementById('phoneInput').value === AUTH_NUMBER) {
             document.getElementById('login-screen').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('login-screen').style.display = 'none';
-                const main = document.getElementById('main-content');
-                main.style.display = 'block';
-                setTimeout(() => main.style.opacity = '1', 50);
+                document.getElementById('main-content').style.display = 'block';
+                setTimeout(() => document.getElementById('main-content').style.opacity = '1', 50);
                 listenToFirebase();
             }, 600);
         } else {
-            error.style.display = 'block';
-            document.getElementById('phoneInput').style.borderColor = '#ff4757';
+            document.getElementById('error-msg').style.display = 'block';
         }
     }
 
@@ -120,71 +128,54 @@
         const url = `${firebaseConfig.databaseURL}/relays/r1.json?auth=${firebaseConfig.apiKey}`;
         setInterval(() => {
             fetch(url).then(res => res.json()).then(status => {
-                const b = document.querySelector(`[data-id='0']`);
-                if(status) { b.classList.add('on'); b.classList.remove('off'); }
-                else { b.classList.remove('on'); b.classList.add('off'); }
-            }).catch(err => console.log("Firebase Error"));
+                const btn = document.getElementById('relayBtn');
+                if(status) { btn.classList.add('on'); btn.classList.remove('off'); }
+                else { btn.classList.remove('on'); btn.classList.add('off'); }
+            });
         }, 1500);
     }
 
     function handleBtnClick(el) {
-        if(editMode) {
-            if(selectedEl) selectedEl.classList.remove('selected');
-            selectedEl = el; selectedEl.classList.add('selected');
-            document.getElementById('selName').innerText = 'Button ' + el.innerText;
+        if(window.editMode) {
+            el.classList.add('selected');
             return;
         }
-        let isCurrentlyOn = el.classList.contains('on');
-        let newStatus = !isCurrentlyOn;
-        
+        let newStatus = !el.classList.contains('on');
         fetch(`${firebaseConfig.databaseURL}/relays/r1.json?auth=${firebaseConfig.apiKey}`, {
             method: 'PUT', body: JSON.stringify(newStatus)
         });
     }
 
-    function unlockEditor() { 
-        if(prompt('Admin Key:') == '4321') { 
-            editMode = true; 
-            document.getElementById('myNumber').style.display = 'block'; 
-            document.getElementById('log-box').style.display='block'; 
-            document.getElementById('editor-controls').style.display='block'; 
-            document.getElementById('lockBtn').style.display='none'; 
-            updateLogs(); 
-        } 
+    // Admin Mode (Password: 4321)
+    function unlockEditor() {
+        if(prompt('Admin Key:') == '4321') {
+            window.editMode = true;
+            document.getElementById('editor-controls').style.display = 'block';
+            makeDraggable(document.getElementById('relayBtn'));
+        }
     }
 
-    function changeSize(d) { 
-        if(!selectedEl) return; 
-        const r = container.getBoundingClientRect();
-        let currentW_px = selectedEl.offsetWidth;
-        let newW_pct = ((currentW_px + d) / r.width * 100).toFixed(1);
-        let newH_pct = (selectedEl.offsetHeight / r.height * 100).toFixed(1);
-        
-        selectedEl.style.width = newW_pct + '%';
-        selectedEl.style.height = newW_pct + '%'; // වටකුරු නිසා එකම අගයක් දෙමු
-        updateLogs(); 
-    }
-    
-    const container = document.getElementById('mainContainer');
-    container.onpointerdown = e => { if(editMode && e.target.classList.contains('btn')) activeBtn = e.target; };
-    container.onpointermove = e => { 
-        if(editMode && activeBtn) { 
-            const r = container.getBoundingClientRect(); 
-            activeBtn.style.left = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'; 
-            activeBtn.style.top = ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%'; 
-            updateLogs(); 
-        } 
-    };
-    container.onpointerup = e => { activeBtn = null; };
-
-    function updateLogs() {
-        let log = ''; document.querySelectorAll('.btn').forEach(b => {
-            log += `.${b.getAttribute('data-cls')} { top: ${b.style.top || getComputedStyle(b).top}; left: ${b.style.left || getComputedStyle(b).left}; width: ${b.style.width || getComputedStyle(b).width}; height: ${b.style.height || getComputedStyle(b).height}; }\n`;
-        });
-        document.getElementById('coords').innerText = log;
+    function makeDraggable(el) {
+        el.onpointerdown = e => { window.activeEl = el; el.setPointerCapture(e.pointerId); };
+        el.onpointermove = e => {
+            if(window.activeEl) {
+                el.style.left = (e.clientX / window.innerWidth * 100).toFixed(1) + '%';
+                el.style.top = (e.clientY / window.innerHeight * 100).toFixed(1) + '%';
+            }
+        };
+        el.onpointerup = () => window.activeEl = null;
     }
 
-    function copyToClipboard() { navigator.clipboard.writeText(document.getElementById('coords').innerText); alert('Coordinates Copied!'); }
+    function changeSize(d) {
+        const el = document.getElementById('relayBtn');
+        let s = el.offsetWidth;
+        el.style.width = (s + d) + 'px'; el.style.height = (s + d) + 'px';
+    }
+
+    function copyNewCode() {
+        const el = document.getElementById('relayBtn');
+        alert(`CSS: top: ${el.style.top}; left: ${el.style.left}; width: ${el.style.width};`);
+    }
 </script>
 </body>
 </html>

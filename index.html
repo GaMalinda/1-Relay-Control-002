@@ -146,7 +146,7 @@
     }
 
     function listenToFirebase() {
-        const url = `${firebaseConfig.databaseURL}/relays.json?auth=${firebaseConfig.apiKey}`;
+        const url = `${firebaseConfig.databaseURL}/relays2.json?auth=${firebaseConfig.apiKey}`;
         const source = new EventSource(url);
         source.onmessage = e => {
             const res = JSON.parse(e.data);
@@ -172,7 +172,7 @@
                 if(newStatus) { b.classList.add('on'); b.classList.remove('off'); }
                 else { b.classList.remove('on'); b.classList.add('off'); }
             });
-            fetch(`${firebaseConfig.databaseURL}/relays/r${parseInt(id)+1}.json?auth=${firebaseConfig.apiKey}`, {
+            fetch(`${firebaseConfig.databaseURL}/relays2/r${parseInt(id)+1}.json?auth=${firebaseConfig.apiKey}`, {
                 method: 'PUT', body: JSON.stringify(newStatus)
             });
             return;
